@@ -11,15 +11,15 @@
 
 </head>
 
-<body class="bg-slate-200 pt-10 ">
-    <div class=" bg-white max-w-md mx-auto rounded-lg shadow-lg ">
+<body class="bg-slate-200 sm:p-8 px-4 pt-10 ">
+    <div class=" bg-white  max-w-md mx-auto rounded-lg shadow-lg ">
         <div class="bg-indigo-500 p-5 text-white rounded-tl-lg rounded-tr-lg font-medium">
             <h1>Todo App</h1>
         </div>
  <!-- text-xs text-slate-500 hover:text-slate-400 underline cursor-pointer -->
         <div class="px-5">
             <form id="todo-form" action="">
-                <div class="flex gap-5 p-5">
+                <div class="flex flex-col gap-5 p-5 sm:flex-row  w-full">
                     <input id="todo-input" placeholder="Enter task description..." type="text"
                         class="border-2 border-gray-300 flex-1 p-2 rounded-sm outline-indigo-500 ">
                     <button id="form-btn" class="bg-violet-700 px-5 py-2 rounded-md text-white font-medium hover:bg-violet-600  ">Add</button>
