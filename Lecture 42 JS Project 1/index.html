@@ -4,31 +4,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Todo App</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
 
 
 </head>
 
-<body class="bg-slate-100">
-    <div class=" bg-white max-w-md mx-auto rounded-lg  ">
-        <div class="bg-indigo-500 p-5 text-white ">
+<body class="bg-slate-200 pt-10 ">
+    <div class=" bg-white max-w-md mx-auto rounded-lg shadow-lg ">
+        <div class="bg-indigo-500 p-5 text-white rounded-tl-lg rounded-tr-lg font-medium">
             <h1>Todo App</h1>
         </div>
-
+ <!-- text-xs text-slate-500 hover:text-slate-400 underline cursor-pointer -->
         <div class="px-5">
             <form id="todo-form" action="">
                 <div class="flex gap-5 p-5">
                     <input id="todo-input" placeholder="Enter task description..." type="text"
-                        class="border border-black flex-1 p-2">
-                    <button id="form-btn" class="bg-violet-700 px-5 py-2 rounded-md text-white">Add</button>
+                        class="border-2 border-gray-300 flex-1 p-2 rounded-sm outline-indigo-500 ">
+                    <button id="form-btn" class="bg-violet-700 px-5 py-2 rounded-md text-white font-medium hover:bg-violet-600  ">Add</button>
+                </div>
+                <div  class="text-right ">
+                    <button 
+                      id="cancel-edit"  class=" hidden font-medium text-xs text-slate-500 hover:text-slate-400 underline cursor-pointer">
+                        Cancel Editing
+                    </button>
                 </div>
             </form>
 
-            <div class="flex justify-between pt-6 pb-1 text-xs border-b border-black">
-                <p>TASKS (1)</p>
-                <p>COMPLETED : 1</p>
+            <div class="flex justify-between pt-6 pb-1 text-xs border-b border-black text-gray-700 font-bold    ">
+                <p id="task-count">TASKS (0)</p>
+                <p id="complete-count">COMPLETED : 0</p>
             </div>
 
             <ul id="todo-list" class="py-5  flex flex-col gap-3">
@@ -40,8 +46,8 @@
                         <button data-id="1">Delete</button>
                     </div>
                 </li> -->
-            </ul> 
-
+            </ul>
+<p id="empty-warning" class="text-center pb-9 text-gray-400">No tasks found. Add a task above to get started!</p>
         </div>
 
     </div>

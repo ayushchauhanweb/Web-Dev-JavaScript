@@ -1,32 +1,24 @@
-let todos = [
-    {
-        id: Date.now() + 1,
-        text: "Go to gym",
-        isCompleted: false
-    },
-    {
-        id: Date.now() + 2,
-        text: "take class",
-        isCompleted: false
-    },
-    {
-        id: Date.now() + 3,
-        text: "Revision web dev",
-        isCompleted: false
-    }
-]
+let todos = []
 
 const todoForm = document.querySelector("#todo-form")
 const todoInput = document.querySelector("#todo-input")
 const todoList = document.querySelector("#todo-list")
 const formBtn = document.querySelector("#form-btn")
+const taskCount = document.querySelector("#task-count")
+const completeCount = document.querySelector("#complete-count")
+const cancelBtn = document.querySelector("#cancel-edit")
+const emptytag = document.querySelector("#empty-warning")
 
 let editTodoId = null
 
 todoForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    const todoValue = todoInput.value
+    const todoValue = todoInput.value.trim()
+
+    if (!todoValue) {
+        return
+    }
 
     console.log({ editTodoId, todoValue });
 
@@ -37,7 +29,6 @@ todoForm.addEventListener('submit', (e) => {
                     ...todo,
                     text: todoValue
                 }
-
             }
             return todo
         })
@@ -48,10 +39,13 @@ todoForm.addEventListener('submit', (e) => {
             text: todoValue,
             isCompleted: false
         }
-
+        emptytag.textContent = ""
         todos.push(newTodo)
 
     }
+
+    todoInput.value = ""
+    cancelButton()
     renderTodo() // jab koi naya todo add hoga first update todos render ho jaega
 })
 
@@ -60,34 +54,35 @@ todoForm.addEventListener('submit', (e) => {
 function renderTodo() {
     todoList.innerHTML = ""
     todos.forEach((todo) => {
-        addTodo(todo)
 
-    })
-}
-renderTodo()// jab first time file execute hoga tab exixting todo render ho jaega      
-
-function addTodo(todo) {
-    const li = document.createElement("li")
-    li.dataset.id = todo.id
-    li.className = `flex gap-2 border border-slate-300 p-4 rounded-xl`
-    li.innerHTML = `
-                    <input data-id=${todo.id} ${todo.isCompleted === true ? 'checked' : ""} type="checkbox">
-                    <p class="flex-1">${todo.text}</p>
+        const li = document.createElement("li")
+        li.dataset.id = todo.id
+        li.className = `flex gap-2 border border-slate-300 p-4 rounded-xl`
+        li.innerHTML = `
+                   <input data-action="toogle" ${todo.isCompleted ? "checked" : ""} type="checkbox">
+                      <p class="flex-1 ${todo.isCompleted ? "line-through text-gray-400 italic" : ""}">${todo.text}</p>
                     <div class="flex gap-2">
-                        <button data-action="edit" data-id=${todo.id}>Edit</button>
-                        <button data-action="delete" data-id=${todo.id}>Delete</button>
-                    </div>
-    `
-    todoList.append(li)
+                        <button class="text-yellow-600 font-bold text-sm  hover:underline cursor-pointer"data-action="edit" data-id=${todo.id}>Edit</button>
+                        <button class="text-pink-500 font-bold text-sm hover:underline cursor-pointer" data-action="delete" data-id=${todo.id}>Delete</button>
+                    </div>`
+
+
+        todoList.append(li)
+    })
+
+    taskCount.textContent = `TASKS (${todos.length})`
+    completeCount.textContent = `COMPLETED: ${todos.filter((todo) => todo.isCompleted).length}`
 }
+
+renderTodo()// jab first time file execute hoga tab exixting todo render ho jaega   
+
 // Use of event deligation
 todoList.addEventListener('click', (e) => {
 
-    let li = e.target.closest("li")
-    let btn = e.target.closest("button")
-    let action = btn?.dataset.action;
-    let id = li?.dataset?.id
-    let checkBox = e.target.closest('input[type="checkbox"]')
+    const li = e.target.closest('li')
+    const id = li.dataset.id;
+
+    let action = e.target.dataset.action
 
     if (action === "edit") {
         console.log("editing...");
@@ -102,7 +97,7 @@ todoList.addEventListener('click', (e) => {
         editTodo(id)
     }
 
-    if (checkBox) {
+    if (action === "toogle") {
         todos = todos.map((todo) => {
             if (todo.id === Number(id)) {
                 return {
@@ -110,11 +105,18 @@ todoList.addEventListener('click', (e) => {
                     isCompleted: !todo.isCompleted
                 }
             }
-
             return todo
         })
-        console.log(todos);
+
     }
+    renderTodo()
+
+    cancelBtn.addEventListener('click', (todo) => {
+        if (todo.id === editTodoId) {
+            todoInput.value = ""
+        }
+    })
+
 })
 
 function todoDelete(e, id) {
@@ -125,6 +127,8 @@ function todoDelete(e, id) {
             return todo
         }
     })
+    formBtn.classList.add("bg-yellow-600")
+    formBtn.classList.remove("bg-violet-700")
 
 }
 
@@ -134,9 +138,26 @@ function editTodo(id) {
         if (todo.id === Number(id)) {
             return todo
         }
-
     })
+
     todoInput.value = currentTodo.text
 
     formBtn.textContent = "Update"
+    cancelBtn.textContent = "Cancel edit"
+    formBtn.classList.add("bg-yellow-600")
+    formBtn.classList.remove("bg-violet-700")
+
+    cancelBtn.classList.remove("hidden")
 }
+
+function cancelButton() {
+    todoInput.value = ""
+    formBtn.textContent = "Add"
+    formBtn.classList.remove("bg-yellow-600")
+    formBtn.classList.add("bg-violet-700")
+
+    cancelBtn.classList.add("hidden")
+}
+cancelBtn.addEventListener('click', () => {
+    cancelButton()
+})
