@@ -65,8 +65,8 @@ function renderTodo() {
                    <input data-action="toogle" ${todo.isCompleted ? "checked" : ""} type="checkbox">
                       <p class="flex-1 ${todo.isCompleted ? "line-through text-gray-400 italic" : ""}">${todo.text}</p>
                     <div class="flex gap-2">
-                        <button class="text-yellow-600 font-bold text-sm  hover:underline cursor-pointer"data-action="edit" data-id=${todo.id}>Edit</button>
-                        <button class="text-pink-500 font-bold text-sm hover:underline cursor-pointer" data-action="delete" data-id=${todo.id}>Delete</button>
+                        <button class="text-yellow-500 font-bold text-sm  hover:underline cursor-pointer bg-yellow-100 rounded-md px-4 py-1"data-action="edit" data-id=${todo.id}>Edit</button>
+                        <button class="text-pink-500 font-bold text-sm hover:underline cursor-pointer bg-pink-100 px-2 py-1 rounded-md" data-action="delete" data-id=${todo.id}>Delete</button>
                     </div>`
 
 
