@@ -1,4 +1,4 @@
-let todos = []
+let todos = JSON.parse(localStorage.getItem("todos")) || []
 
 const todoForm = document.querySelector("#todo-form")
 const todoInput = document.querySelector("#todo-input")
@@ -22,7 +22,7 @@ todoForm.addEventListener('submit', (e) => {
     }
 
     console.log({ editTodoId, todoValue });
-           
+
     if (editTodoId) {
         todos = todos.map((todo) => {
             if (todo.id === Number(editTodoId)) {
@@ -33,6 +33,7 @@ todoForm.addEventListener('submit', (e) => {
             }
             return todo
         })
+        localStorage.setItem("todos", JSON.stringify(todos))
 
     } else {
         let newTodo = {
@@ -42,7 +43,7 @@ todoForm.addEventListener('submit', (e) => {
         }
 
         todos.push(newTodo)
-
+        localStorage.setItem("todos", JSON.stringify(todos))
 
     }
 
@@ -68,7 +69,7 @@ function renderTodo() {
                         <button class="text-pink-500 font-bold text-sm hover:underline cursor-pointer" data-action="delete" data-id=${todo.id}>Delete</button>
                     </div>`
 
-            
+
         todoList.append(li)
 
     })
@@ -76,7 +77,7 @@ function renderTodo() {
 
     taskCount.textContent = `TASKS (${todos.length})`
     completeCount.textContent = `COMPLETED: ${todos.filter((todo) => todo.isCompleted).length}`
-    
+
     if (todos.length === 0) {
 
         emptytag.classList.remove("hidden");
@@ -120,6 +121,7 @@ todoList.addEventListener('click', (e) => {
             }
             return todo
         })
+        localStorage.setItem("todos", JSON.stringify(todos))
 
     }
     renderTodo()
@@ -140,6 +142,7 @@ function todoDelete(e, id) {
             return todo
         }
     })
+    localStorage.setItem("todos", JSON.stringify(todos))
     formBtn.classList.remove("bg-yellow-600")
     formBtn.classList.add("bg-violet-700")
 }
@@ -150,7 +153,9 @@ function editTodo(id) {
         if (todo.id === Number(id)) {
             return todo
         }
+
     })
+
 
     todoInput.value = currentTodo.text
 
