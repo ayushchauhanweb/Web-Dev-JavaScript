@@ -103,4 +103,4 @@ acc1.deposit(-111)
 acc1.get()
 // acc1.calculateTax() // acc1.calculateTax is not a function
 // BankAccount.calculateTax 
-console.log(BankAccount.totalBankAccount);
+console.log(BankAccount.totalBankAccount); 
