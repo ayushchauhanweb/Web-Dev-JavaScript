@@ -40,7 +40,7 @@ class User {
 
 
 const u1 = new User("Nishant", "India")
-const u2 = new User("Akshay", "India")
+const u2 = new User("Ayush", "India")
 
 // u1.name = "Name updated"
 // console.log(u1);
@@ -62,7 +62,7 @@ class BankAccount {
 
     withdraw(amount) { // method
         if (amount > this.#balance) {
-            console.log("Bete itne paise na hai tere pass");
+            console.log("Not sufficient balance");
             return
         }
 
@@ -71,7 +71,7 @@ class BankAccount {
 
     deposit(amount) { // method
         if (amount <= 0) {
-            console.log("Bete pagal samjha hua kya, muje aate hai edge cases handle krne garib");
+            console.log("error");
             return
         }
         this.#balance = this.#balance + amount
