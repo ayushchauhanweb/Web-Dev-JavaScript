@@ -1,0 +1,21 @@
+.random {
+    background-color: purple;
+    font-size: 30px;
+    font-style: italic;
+}
+
+.singleProduct {
+    background-color: rgb(22, 213, 159);
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    margin: 30px;
+    width: 300px;
+    height: 300px;
+    justify-content: center;
+}
+
+.productDetail {
+    display: flex;
+    justify-content: space-between;
+}
